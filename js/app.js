@@ -6,9 +6,9 @@ class storeMinMax {
     averageCookies;
     random;
     constructor() {
-        this.hourlyCustomers = 0;
-        this.averageCookies = 0;
-        this.random = Math.floor(Math.random() * (10 - 0) + 0);
+        this.hourlyCustomers = 0;//use random here
+        this.averageCookies = 0;//use this with random
+        this.random = Math.floor(Math.random() * (65 - 23) + 23);// for every hour
     }
 }
 class storeInit1 extends storeMinMax {
