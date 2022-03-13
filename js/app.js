@@ -6,9 +6,9 @@ let hoursAndAverages = {
     CalcAverage : [],
     toSetAverage : [],
     hourlyCustomers : [] ,
-    averageCookies : [], //Math.floor(math.random() * (10 - 0) + 0);
+    averageCookies : [], 
 
-    setTime: function(min, max)
+    setTime: function(min, max)//sets time using military time
     {
         let len = max - min;
         this.timeArr[len];
@@ -57,7 +57,7 @@ let hoursAndAverages = {
         }
 
     },
-    randoFunc: function(min, max)
+    randoFunc: function(min, max)//returns the average of five random numbers
     {
         let randomBuff = 0 ;
         let arr = []
@@ -130,7 +130,6 @@ let storeInit2 = {
 function main()//works similar to main in other programming languages. for simplicity all work will be here.
 {
     let aCompany = storeObj;
-    //obj.hoursAndAverages.setAverage(0, 10, "customer");
     let costumersPurchased = aCompany.hourlyCustomers;
     let hoursOfOperation = aCompany.timer;
     let cookiesPurchased = aCompany.averageCookies;
