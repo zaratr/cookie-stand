@@ -55,6 +55,7 @@ let seattle = {
             }
             let finalListItem = document.createElement('li');
             finalListItem.textContent = "total: " + this.trackerTotalCookies;
+            list.appendChild(finalListItem);
 
         }
     }
@@ -113,6 +114,7 @@ let tokyo = {
             }
             let finalListItem = document.createElement('li');
             finalListItem.textContent = "total: " + this.trackerTotalCookies;
+            list.appendChild(finalListItem);
 
         }
     }
@@ -172,6 +174,7 @@ let dubai = {
             }
             let finalListItem = document.createElement('li');
             finalListItem.textContent = "total: " + this.trackerTotalCookies;
+            list.appendChild(finalListItem);
 
         }
     }
@@ -230,6 +233,7 @@ let paris = {
             }
             let finalListItem = document.createElement('li');
             finalListItem.textContent = "total: " + this.trackerTotalCookies;
+            list.appendChild(finalListItem);
 
         }
     }
@@ -288,6 +292,7 @@ let lima = {
             }
             let finalListItem = document.createElement('li');
             finalListItem.textContent = "total: " + this.trackerTotalCookies;
+            list.appendChild(finalListItem);
 
         }
     }
