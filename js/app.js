@@ -1,155 +1,306 @@
 'use strict'
 
 
-let hoursAndAverages = {
-    timeArr : [],
-    CalcAverage : [],
-    toSetAverage : [],
-    hourlyCustomers : [] ,
-    averageCookies : [], 
+let hours = [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];//this is from 6am - 8pm
 
-    setTime: function(min, max)//sets time using military time
-    {
-        let len = max - min;
-        this.timeArr[len];
-        for(let i = 0; i < len; ++i)
-        {
-            this.timeArr[i] = min;
-            ++min;
-        }
-        return this.timeArr;
-    },
+let seattle = {
+        name: "Seattle",
+        min: 23,
+        max: 65,
+        avg: 6.3,
 
-    setAverage: function(min, max, cookiesOrCustomer)
-    {
-        this.setTime(6,20);//sets time for fixed hours of day
-        let len = this.timeArr.length;
-        let randomBuff;
-        this.CalcAverage[len]
-        this.toSetAverage[2];
-        for(let i = 0; i < len; ++i)
+        customers : [],
+        cookies : [],//average per hour
+        trackerTotalCookies: 0,//total cookies
+        setCustomers: function()
         {
-            for(let j = 0; j < 2; ++j)
-            { 
-                randomBuff = this.randoFunc(min, max)
-                //tuple array TODO: map
-                this.toSetAverage[j] = randomBuff;
+            for(let i of hours)
+            {
+                //loops through array 
+                this.customers.push(Math.floor(Math.random() * (this.max - this.min + 1) + this.min));
             }
-            //main buffer array for setting array with average
-            this.CalcAverage[i] = this.toSetAverage;
+        },
 
-        }
-        if(cookiesOrCustomer === "cookies")
+        setCookies: function()
         {
-            //sets cookie average
-            //this.averageCookies[len];
-            this.averageCookies = this.CalcAverage;
-            return this.averageCookies;
-        }
-        else //!== "cookies  instead the string customers is expected here" 
-        {
-            //sets customer average
-            this.hourlyCustomers[len];
+
+            this.setCustomers();//calls this to init
+            let len = this.customers.length;
+            //must be set before using 
+            //do a loop to init 
             for(let i = 0; i < len; ++i)
-            this.hourlyCustomers[i] = this.CalcAverage[i][0];
+            {
+                const hour = Math.ceil(this.customers[i] * this.avg);
+                this.cookies.push(hour);
+                this.trackerTotalCookies += hour;
+            }
 
-            return this.hourlyCustomers;
+        },
+
+        renderer: function(anhtmlElement)
+        {
+            //sets to the dom
+            //renders to html
+            this.setCookies();//sets all 
+            let len = this.cookies.length;
+            document.getElementById("sName").innerHTML = this.name;//title for ul 
+            let list = document.getElementById(anhtmlElement) 
+            for(let i = 0; i < len; ++i)
+            {
+                //create by tag
+                let listItem = document.createElement('li');
+                listItem.textContent=hours[i]  + " : " + this.cookies[i] + " Cookies";
+                //append to list
+                list.appendChild(listItem);
+            }
+            let finalListItem = document.createElement('li');
+            finalListItem.textContent = "total: " + this.trackerTotalCookies;
+
         }
+    }
 
-    },
-    randoFunc: function(min, max)//returns the average of five random numbers
-    {
-        let randomBuff = 0 ;
-        let arr = []
-        for(let i = 0; i < 5; ++i)
+let tokyo = {
+        name: "Tokyo",
+        min: 3,
+        max: 24,
+        avg: 1.2,
+
+        customers : [],
+        cookies : [],//average per hour
+        trackerTotalCookies: 0,//total cookies
+        setCustomers: function()
+        {
+            for(let i of hours)
+            {
+                //loops through array 
+                this.customers.push(Math.floor(Math.random() * (this.max - this.min + 1) + this.min));
+            }
+        },
+
+        setCookies: function()
         {
 
-            //TODO: 1. don't need array. 2. this needs time.sleep() because it gives same number
+            this.setCustomers();//calls this to init
+            let len = this.customers.length;
+            //must be set before using 
+            //do a loop to init 
+            for(let i = 0; i < len; ++i)
+            {
+                const hour = Math.ceil(this.customers[i] * this.avg);
+                this.cookies.push(hour);
+                this.trackerTotalCookies += hour;
+            }
 
-            arr[i] = parseInt(Math.random() * (max - min) + min);// ALERT: for every hour. doesn't need a floor because in return statemetn
-            randomBuff += arr[i];
-        }
+        },
 
-        return Math.floor(randomBuff /= 5);
-    }
-}
-//sets all to default
-let storeObj = {
-    timer : hoursAndAverages.setTime(6, 20),
-    hourlyCustomers : hoursAndAverages.setAverage(0, 10, "customers"),
-    averageCookies : hoursAndAverages.setAverage(23, 65, "cookies"),
-/*
-    setValues: function() {
-        this.timer = hoursAndAverages.setTime(min, max);
-    }
-*/
-}
-
-//sets values passed in by argument. similar to constructor
-let storeInit1 = {
-    hourlyCustomers : 0,
-    clientAverage : 0,
-    timer : hoursAndAverages.setTime(6,20),
-
-    setValues: function(clientHour, clientAverage) 
-    {
-        this.timer = hoursAndAverages.setTime(min, max);
-        if (clientAverage > 0 && !clientHour) {
-            this.hourlyCustomers = clientHour;
-        }
-        else if (clientHour > 0 && !clientAverage) {
-            this.clientAverage = clientAverage;
-        }
-        else if (clientAverage, clientHour) {
-            this.averageCookies = clientAverage;
-            this.hourlyCustomers = clientHour;
-        }
-    }
-/*
-*/
-};
-/*
-*/
-//copies an object similar parameters. although now i know we can just add into it
-let storeInit2 = {
-    averageCookies : 0,
-    hourlyCustomers : 0,
-    timer : 0,
-
-    setValues : function(toCpyObj){
-        if(toCpyObj)//if it exists
+        renderer: function(anhtmlElement)
         {
-            this.timer = toCpyObj.timer;
-            this.averageCookies = toCpyObj.averageCookies;
-            this.hourlyCustomers = toCpyObj.hourlyCustomers;
-        }
-        return;
-    }
-};
+            //sets to the dom
+            //renders to html
+            this.setCookies();//sets all 
+            let len = this.cookies.length;
+            document.getElementById("tName").innerHTML = this.name;//title for ul 
+            let list = document.getElementById(anhtmlElement);
+            for(let i = 0; i < len; ++i)
+            {
+                //create
+                //by tag
+                let listItem = document.createElement('li');
+                //
+                listItem.textContent=hours[i] + " : " + this.cookies[i] + " Cookies";
+                //append to list
+                list.appendChild(listItem);
+            }
+            let finalListItem = document.createElement('li');
+            finalListItem.textContent = "total: " + this.trackerTotalCookies;
 
-function main()//works similar to main in other programming languages. for simplicity all work will be here.
+        }
+    }
+
+let dubai = {
+        name: "Dubai",
+        min: 11,
+        max: 38,
+        avg: 3.7,
+
+        customers : [],
+        cookies : [],//average per hour
+        trackerTotalCookies: 0,//total cookies
+        setCustomers: function()
+        {
+            for(let i of hours)
+            {
+                //loops through array 
+                this.customers.push(Math.floor(Math.random() * (this.max - this.min + 1) + this.min));
+            }
+        },
+
+        setCookies: function()
+        {
+
+            this.setCustomers();//calls this to init
+            let len = this.customers.length;
+            document.getElementById("dName").innerHTML = this.name;//title for ul 
+            //must be set before using 
+            //do a loop to init 
+            for(let i = 0; i < len; ++i)
+            {
+                const hour = Math.ceil(this.customers[i] * this.avg);
+                this.cookies.push(hour);
+                this.trackerTotalCookies += hour;
+            }
+
+        },
+
+        renderer: function(anhtmlElement)
+        {
+            //sets to the dom
+            //renders to html
+            this.setCookies();//sets all 
+            document.getElementById("dName").innerHTML = this.name;//title for ul 
+            let len = this.cookies.length;
+            let list = document.getElementById(anhtmlElement);
+            for(let i = 0; i < len; ++i)
+            {
+                //create
+                //by tag
+                let listItem = document.createElement('li');
+                //
+                listItem.textContent=hours[i] + " : " + this.cookies[i] +"Cookies";
+                //append to list
+                list.appendChild(listItem);
+            }
+            let finalListItem = document.createElement('li');
+            finalListItem.textContent = "total: " + this.trackerTotalCookies;
+
+        }
+    }
+
+let paris = {
+        name: "Paris",
+        min: 20,
+        max: 38,
+        avg: 2.3,
+
+        customers : [],
+        cookies : [],//average per hour
+        trackerTotalCookies: 0,//total cookies
+        setCustomers: function()
+        {
+            for(let i of hours)
+            {
+                //loops through array 
+                this.customers.push(Math.floor(Math.random() * (this.max - this.min + 1) + this.min));
+            }
+        },
+
+        setCookies: function()
+        {
+
+            this.setCustomers();//calls this to init
+            let len = this.customers.length;
+            //must be set before using 
+            //do a loop to init 
+            for(let i = 0; i < len; ++i)
+            {
+                const hour = Math.ceil(this.customers[i] * this.avg);
+                this.cookies.push(hour);
+                this.trackerTotalCookies += hour;
+            }
+
+        },
+
+        renderer: function(anhtmlElement)
+        {
+            //sets to the dom
+            //renders to html
+            this.setCookies();//sets all 
+            document.getElementById("pName").innerHTML = this.name;//title for ul 
+            let len = this.cookies.length;
+            let list = document.getElementById(anhtmlElement);
+            for(let i = 0; i < len; ++i)
+            {
+                //create
+                //by tag
+                let listItem = document.createElement('li');
+                //
+                listItem.textContent=hours[i] + " : " + this.cookies[i] +"Cookies";
+                //append to list
+                list.appendChild(listItem);
+            }
+            let finalListItem = document.createElement('li');
+            finalListItem.textContent = "total: " + this.trackerTotalCookies;
+
+        }
+    }
+
+let lima = {
+        name: "Lima",
+        min: 2,
+        max: 16,
+        avg: 4.6,
+
+        customers : [],
+        cookies : [],//average per hour
+        trackerTotalCookies: 0,//total cookies
+        setCustomers: function()
+        {
+            for(let i of hours)
+            {
+                //loops through array 
+                this.customers.push(Math.floor(Math.random() * (this.max - this.min + 1) + this.min));
+            }
+        },
+
+        setCookies: function()
+        {
+
+            this.setCustomers();//calls this to init
+            let len = this.customers.length;
+            //must be set before using 
+            //do a loop to init 
+            for(let i = 0; i < len; ++i)
+            {
+                const hour = Math.ceil(this.customers[i] * this.avg);
+                this.cookies.push(hour);
+                this.trackerTotalCookies += hour;
+            }
+
+        },
+
+        renderer: function(anhtmlElement)
+        {
+            //sets to the dom
+            //renders to html
+            this.setCookies();//sets all 
+            document.getElementById("lName").innerHTML = this.name;//title for ul 
+            let len = this.cookies.length;
+            let list = document.getElementById(anhtmlElement);
+            for(let i = 0; i < len; ++i)
+            {
+                //create
+                //by tag
+                let listItem = document.createElement('li');
+                //
+                listItem.textContent=hours[i] + " : " + this.cookies[i] +"Cookies";
+                //append to list
+                list.appendChild(listItem);
+            }
+            let finalListItem = document.createElement('li');
+            finalListItem.textContent = "total: " + this.trackerTotalCookies;
+
+        }
+    }
+
+function main()
 {
-    let aCompany = storeObj;
-    let costumersPurchased = aCompany.hourlyCustomers;
-    let hoursOfOperation = aCompany.timer;
-    let cookiesPurchased = aCompany.averageCookies;
-
-    /*array that hass all the values needed. 
-    all are arrays except cookiesPurchased. 
-    cookiesPurchase is a 2d Array/map*/
-    const storeArr = [
-        "Seattle", `${hoursOfOperation}`, `${cookiesPurchased}`, `${costumersPurchased}`,
-        "Tokyo", `${hoursOfOperation}`, `${cookiesPurchased}`, `${costumersPurchased}`,
-        "Dubai", `${hoursOfOperation}`, `${cookiesPurchased}`, `${costumersPurchased}`,
-        "Paris", `${hoursOfOperation}`, `${cookiesPurchased}`, `${costumersPurchased}`,
-        "Lima", `${hoursOfOperation}`, `${cookiesPurchased}`, `${costumersPurchased}`
-    ];
-
-    return 0;
+    seattle.renderer("seattle");
+    tokyo.renderer("tokyo");
+    dubai.renderer("dubai");
+    paris.renderer("paris");
+    lima.renderer("lima")
+    
+    return ;
 }
 
 main();
-
-
-
-
