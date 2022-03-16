@@ -1,6 +1,11 @@
 
-let hours = [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];//this is from 6am - 8pm
+ //this is from 6am - 8pm
+let hours = ["6am","7am","8am","9am","10am", "11am", "12pm",
+                "1pm","2pm","3pm","4pm","5pm","6pm","7pm","Total"];
+    
+//let mainElem = document.getElementById("shops");
 
+//function that returns a random number with min and max arguements
 function random(min, max)
 {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -18,7 +23,7 @@ function City(name, avg, min, max)
     this.avg = avg;
 
     this.costumers = [];
-    this.cookies = [];
+    this.cookies = [];//averages with customers and min max
     this.trackerTotalCookies = 0;
 
     //init the constructore here js way
@@ -44,36 +49,59 @@ City.prototype.setCookies = function()
         this.trackerTotalCookies += hour;
     }
 }
-
-City.prototype.render = function()
+City.prototype.render = function(stores)
+//function createTbody(stores)
 {
-//user defined parameter that is a string
-    let userIdName;
-    switch(this.name)
+    const body = document.getElementById('shops');
+    const trElem = document.createElement('tr');
+    body.appendChild(trElem);
+    //creating content
+    const tdElem = document.createElement('td');
+    tdElem.textContent= stores.name;
+    trElem.appendChild(tdElem);
+    
+
+    for(let i = 0; i< (hours.length -1); ++i)
     {
-        case "Seattle" : userIdName = "sName"; break;
-        case "Tokyo"    : userIdName = "tName"; break;
-        case "Dubai"    : userIdName = "dName"; break;
-        case "Paris"    : userIdName = "pName"; break;
-        case "Lima"     : userIdName = "lName"; break;
+        const tdElem2 = document.createElement('td');
+        tdElem2.textContent = stores.cookies[i];
+        trElem.appendChild(tdElem2);
+        if(i === hours.length -2)//need to get to the last element before leaving loop to add total
+        {
+            let finalListItem = document.createElement('td');
+            finalListItem.textContent = stores.trackerTotalCookies;
+            trElem.appendChild(finalListItem);
+
+            break;
+        }
+    }
+    
+
+}
+
+
+
+
+
+function createTheader()
+{
+    const table = document.getElementById('shops');
+    const th1 = document.createElement('th');
+    const trElement = document.createElement('tr');
+
+    table.appendChild(trElement);
+    th1.textContent = "Location";
+    trElement.appendChild(th1);
+
+    for(let j = 0; j< hours.length; j++)
+    {
+        const thElem = document.createElement('th');
+        thElem.textContent = hours[j];
+        trElement.appendChild(thElem);
     }
 
-    //renders to html
-    let len = this.cookies.length;
-    document.getElementById(userIdName).textContent = this.name;//title for ul 
-    let list = document.getElementById(this.name); 
-    for(let i = 0; i < len; ++i)
-    {
-        //create by tag
-        let listItem = document.createElement('li');
-        listItem.textContent=hours[i]  + " : " + this.cookies[i] + " Cookies";
-        //append to list
-        list.appendChild(listItem);
-    }
-    let finalListItem = document.createElement('li');
-    finalListItem.textContent = "total: " + this.trackerTotalCookies;
-    list.appendChild(finalListItem);
 }
+
 
 //Instantiate
 new City("Seattle", 23, 65, 6.3);
@@ -81,14 +109,28 @@ new City("Tokyo", 3, 24, 1.2);
 new City("Dubai", 11, 38, 3.7);
 new City("Paris", 20, 38, 2.3);
 new City("Lima", 2, 16, 4.6);
+/*
+*/
 
 function main()
 {
+    /*
+    let arrHeader = [
+    "Location", //string
+    hours       //array of strings
+    ];
+    let mainElem = document.createElement('table');//created html tag
+    citiesSection.appendChild(mainElem);//appending it to the main tag
+    */
+
+    
+    createTheader();
     for(city of citiesObj)
     {
         city.setCustomers();
         city.setCookies();
-        city.render();
+        //createTbody(city);
+        city.render(city);
     }
     return;
 }

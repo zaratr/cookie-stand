@@ -2,10 +2,16 @@ body
 {
     background-color: lightgrey;
 }
-tr
+table, tr, th, td
 {
 
-    font-family: 'Zilla Slab Highlight', cursive;
+    /*font-family: 'Zilla Slab Highlight', cursive;*/
+    border: 2px solid black;
+    padding: 5px;
+
+}
+td{
+    text-align: center;
 }
 ul
 {
