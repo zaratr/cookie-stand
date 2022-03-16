@@ -60,14 +60,14 @@ City.prototype.render = function()
     tdElem.textContent= this.name;
     trElem.appendChild(tdElem);
     
-
     //creating content
-    for(let i = 0; i< (hours.length -1); ++i)
+    const len = hours.length;
+    for(let i = 0; i< (len -1); ++i)
     {
         const tdElem2 = document.createElement('td');
         tdElem2.textContent = this.cookies[i];
         trElem.appendChild(tdElem2);
-        if(i === hours.length -2)//need to get to the last element before leaving loop to add total
+        if(i === len -2)//need to get to the last element before leaving loop to add total
         {
             let finalListItem = document.createElement('td');
             finalListItem.textContent = this.trackerTotalCookies;
@@ -94,7 +94,8 @@ function createTheader()
     th1.textContent = "Location";
     trElement.appendChild(th1);
 
-    for(let j = 0; j< hours.length; j++)
+    const len = hours.length;
+    for(let j = 0; j< len; ++j)
     {
         const thElem = document.createElement('th');
         thElem.textContent = hours[j];
