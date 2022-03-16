@@ -15,7 +15,7 @@ function random(min, max)
 let citiesObj = [];//will be filled later.
 
 //constructor implementation
-function City(name, avg, min, max)
+function City(name, min, max, avg)
 {
     this.name = name;
     this.max = max;
