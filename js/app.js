@@ -49,27 +49,28 @@ City.prototype.setCookies = function()
         this.trackerTotalCookies += hour;
     }
 }
-City.prototype.render = function(stores)
+City.prototype.render = function()
 //function createTbody(stores)
 {
     const body = document.getElementById('shops');
     const trElem = document.createElement('tr');
-    body.appendChild(trElem);
-    //creating content
     const tdElem = document.createElement('td');
-    tdElem.textContent= stores.name;
+
+    body.appendChild(trElem);
+    tdElem.textContent= this.name;
     trElem.appendChild(tdElem);
     
 
+    //creating content
     for(let i = 0; i< (hours.length -1); ++i)
     {
         const tdElem2 = document.createElement('td');
-        tdElem2.textContent = stores.cookies[i];
+        tdElem2.textContent = this.cookies[i];
         trElem.appendChild(tdElem2);
         if(i === hours.length -2)//need to get to the last element before leaving loop to add total
         {
             let finalListItem = document.createElement('td');
-            finalListItem.textContent = stores.trackerTotalCookies;
+            finalListItem.textContent = this.trackerTotalCookies;
             trElem.appendChild(finalListItem);
 
             break;
@@ -104,33 +105,27 @@ function createTheader()
 
 
 //Instantiate
-new City("Seattle", 23, 65, 6.3);
-new City("Tokyo", 3, 24, 1.2);
-new City("Dubai", 11, 38, 3.7);
-new City("Paris", 20, 38, 2.3);
-new City("Lima", 2, 16, 4.6);
+    //City  name  -   min - max - avg
+                    
+new City(   "Seattle"  ,23, 65, 6.3);
+new City(   "Tokyo"    ,3, 24, 1.2);
+new City(   "Dubai"    ,11, 38, 3.7);
+new City(   "Paris"    ,20, 38, 2.3);
+new City(   "Lima"     ,2, 16, 4.6);
 /*
 */
 
 function main()
 {
-    /*
-    let arrHeader = [
-    "Location", //string
-    hours       //array of strings
-    ];
-    let mainElem = document.createElement('table');//created html tag
-    citiesSection.appendChild(mainElem);//appending it to the main tag
-    */
-
-    
+    //create a heater element in html with createHeader
+    //for loop that takes cities object and uses the content in each
+    //city inside forloop is one object in citiesObj array
     createTheader();
     for(city of citiesObj)
     {
-        city.setCustomers();
-        city.setCookies();
-        //createTbody(city);
-        city.render(city);
+        city.setCustomers();//sets the costumer array using random()
+        city.setCookies();//sets the cookies array using the math for avg per hour
+        city.render();//renders all to the html 
     }
     return;
 }
