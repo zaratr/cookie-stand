@@ -3,10 +3,13 @@
 let hours = ["6am","7am","8am","9am","10am", "11am", "12pm",
                 "1pm","2pm","3pm","4pm","5pm","6pm","7pm"];
 
+let body = document.getElementById('shops');
 let totalPerHourCookies = totalPerHourCookiesArr();
 let totalsFinal = 0;
 //array to hold constructors. constructors are written in functions in js
 let citiesObj = [];//will be filled later.
+//get form from dom
+let myForm = document.getElementById('city-form');
 
 /////////////constructor implementation//////////////
 function City(name, min, max, avg)
@@ -48,7 +51,6 @@ City.prototype.setCookies = function()
 City.prototype.render = function()
 //function createTbody(stores)
 {
-    const body = document.getElementById('shops');
     const trElem = document.createElement('tr');
     const tdElem = document.createElement('td');
 
@@ -64,13 +66,14 @@ City.prototype.render = function()
         tdElem2.textContent = this.cookies[i];
         trElem.appendChild(tdElem2);
     }
+    //must add newCity here
     let finalListItem = document.createElement('td');
     finalListItem.textContent = this.trackerTotalCookies;
     trElem.appendChild(finalListItem);
+}
 
     
 
-}
 /////////////////////function implementation//////////////////
 //function that returns a random number with min and max arguements
 function random(min, max)
@@ -153,6 +156,39 @@ new City(   "Tokyo"    ,3, 24, 1.2);
 new City(   "Dubai"    ,11, 38, 3.7);
 new City(   "Paris"    ,20, 38, 2.3);
 new City(   "Lima"     ,2, 16, 4.6);
+//define handler / callback function
+
+
+
+
+function handleSubmit(event)
+{
+    let cityString, minString, maxString, avgString;
+    body.innerHTML='';//resets the html id getter body is global
+    //prevent issues . browser from sending my info away
+    event.preventDefault();
+
+
+    //getting info from myform
+    let newCity = event.target.cityName.value;//string from user
+    //will be a array
+    //dont need this unless you expect string from user with commas
+    newCity = newCity.split(',');//will pull info from client  and seperate by comma
+    cityString = newCity[0];
+    minString = parseInt(newCity[1]);
+    maxString = parseInt(newCity[2]);
+    avgString = parseInt(newCity[3]);
+
+
+    new City(cityString, minString, maxString, avgString);
+    main();//although I shouldn't call this main, this will re-render and use a table
+    return;
+
+}
+// add event listeners
+//myForm is global getelementbyid
+myForm.addEventListener('submit', handleSubmit);
+
 
 function main()
 {
@@ -175,3 +211,4 @@ function main()
 }
 
 main();
+

@@ -8,8 +8,16 @@
     <link href="/css/reset.css" rel="stylesheet">
     <title>Lab5ProjectSales</title>
 </head>
-<body>
-    <table id="shops"></table>
-    <script src="/js/app.js"></script>
-</body>
+    <body>
+        <table id="shops"></table>
+
+    <form id="city-form">
+        <fieldset>
+            <legend>Do you want to add a new city?</legend>
+            <label for="cityName">comma seperation only with: name, minimum average customers per hour, maximum average per hour, and average cookies per hour</label>
+            <input type="text" id="cityName" name="cityName" placeholder="city,minimum,maximum,average">
+        </fieldset>
+    </form>
+        <script src="/js/app.js"></script>
+    </body>
 </html>
