@@ -1,19 +1,14 @@
-
+///////////////////global variables
  //this is from 6am - 8pm
 let hours = ["6am","7am","8am","9am","10am", "11am", "12pm",
-                "1pm","2pm","3pm","4pm","5pm","6pm","7pm","Total"];
-    
+                "1pm","2pm","3pm","4pm","5pm","6pm","7pm"];
 
-//function that returns a random number with min and max arguements
-function random(min, max)
-{
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
+let totalPerHourCookies = totalPerHourCookiesArr();
+let totalsFinal = 0;
 //array to hold constructors. constructors are written in functions in js
 let citiesObj = [];//will be filled later.
 
-//constructor implementation
+/////////////constructor implementation//////////////
 function City(name, min, max, avg)
 {
     this.name = name;
@@ -29,7 +24,7 @@ function City(name, min, max, avg)
     citiesObj.push(this);
     return; 
 }
-
+////////////////////////protype for Constructor///////////////////////
 //method implementation is done out of function using prototype keyword.
 City.prototype.setCustomers = function()
 {
@@ -46,8 +41,10 @@ City.prototype.setCookies = function()
         const hour = Math.ceil(this.costumers[i] * this.avg);
         this.cookies.push(hour);
         this.trackerTotalCookies += hour;
+        totalsFinal += this.trackerTotalCookies;
     }
 }
+
 City.prototype.render = function()
 //function createTbody(stores)
 {
@@ -61,27 +58,25 @@ City.prototype.render = function()
     
     //creating content
     const len = hours.length;
-    for(let i = 0; i< (len -1); ++i)
+    for(let i = 0; i< len; ++i)
     {
         const tdElem2 = document.createElement('td');
         tdElem2.textContent = this.cookies[i];
         trElem.appendChild(tdElem2);
-        if(i === len -2)//need to get to the last element before leaving loop to add total
-        {
-            let finalListItem = document.createElement('td');
-            finalListItem.textContent = this.trackerTotalCookies;
-            trElem.appendChild(finalListItem);
-
-            break;
-        }
     }
+    let finalListItem = document.createElement('td');
+    finalListItem.textContent = this.trackerTotalCookies;
+    trElem.appendChild(finalListItem);
+
     
 
 }
-
-
-
-
+/////////////////////function implementation//////////////////
+//function that returns a random number with min and max arguements
+function random(min, max)
+{
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
 
 function createTheader()
 {
@@ -100,6 +95,52 @@ function createTheader()
         thElem.textContent = hours[j];
         trElement.appendChild(thElem);
     }
+    thElem = document.createElement('th');
+    thElem.textContent = 'total';
+    trElement.appendChild(thElem);
+
+}
+
+function totalsPerHour()
+{
+    for(i = 0; i < hours.length; ++i)
+    {
+        for(j = 0; j < citiesObj.length; ++j)
+        {
+            totalPerHourCookies[i] += citiesObj[j].cookies[i];
+        }
+    }
+}
+
+
+//each hour we will have the average
+function totalPerHourCookiesArr()
+{
+    let container = [];
+    for(hour of hours)
+    {container.push(0);}
+    return container;
+}
+
+function createTFoot()
+{
+    const tFoot = document.getElementById('shops');
+    const tfootElem = document.createElement('tfoot');
+    const thElem = document.createElement('th')
+
+    tFoot.appendChild(tfootElem);
+    thElem.textContent = 'total gross'
+    tfootElem.appendChild(thElem);
+    for(hourlyTotals of totalPerHourCookies)
+    {
+        const thElem2 = document.createElement('th');
+        thElem2.textContent = hourlyTotals;
+        tfootElem.appendChild(thElem2);
+    }
+
+    let thElem3 = document.createElement('th');
+    thElem3.textContent = totalsFinal;//global variable
+    tfootElem.appendChild(thElem3);
 
 }
 
@@ -112,11 +153,12 @@ new City(   "Tokyo"    ,3, 24, 1.2);
 new City(   "Dubai"    ,11, 38, 3.7);
 new City(   "Paris"    ,20, 38, 2.3);
 new City(   "Lima"     ,2, 16, 4.6);
-/*
-*/
 
 function main()
 {
+
+    //local declarations
+
     //create a heater element in html with createHeader
     //for loop that takes cities object and uses the content in each
     //city inside forloop is one object in citiesObj array
@@ -127,6 +169,8 @@ function main()
         city.setCookies();//sets the cookies array using the math for avg per hour
         city.render();//renders all to the html 
     }
+    totalsPerHour();//saves cookies totals per hour to array
+    createTFoot();
     return;
 }
 
