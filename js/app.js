@@ -44,13 +44,14 @@ City.prototype.setCookies = function()
         const hour = Math.ceil(this.costumers[i] * this.avg);
         this.cookies.push(hour);
         this.trackerTotalCookies += hour;
-        totalsFinal += this.trackerTotalCookies;
+        totalsFinal += hour;
     }
 }
 
 City.prototype.render = function()
 //function createTbody(stores)
 {
+    let body = document.getElementById('shops');
     const trElem = document.createElement('tr');
     const tdElem = document.createElement('td');
 
@@ -108,9 +109,11 @@ function totalsPerHour()
 {
     for(i = 0; i < hours.length; ++i)
     {
+        let total = 0;
         for(j = 0; j < citiesObj.length; ++j)
         {
             totalPerHourCookies[i] += citiesObj[j].cookies[i];
+            //total += citiesObj[j].cookies[i];
         }
     }
 }
@@ -134,10 +137,13 @@ function createTFoot()
     tFoot.appendChild(tfootElem);
     thElem.textContent = 'total gross'
     tfootElem.appendChild(thElem);
-    for(hourlyTotals of totalPerHourCookies)
+
+    const len = hours.length;
+    for(let i = 0; i < len; ++i)
     {
         const thElem2 = document.createElement('th');
-        thElem2.textContent = hourlyTotals;
+        thElem2.textContent = totalPerHourCookies[i];
+        //thElem2.textContent = totalsPerHour();
         tfootElem.appendChild(thElem2);
     }
 
@@ -152,10 +158,10 @@ function createTFoot()
     //City  name  -   min - max - avg
                     
 new City(   "Seattle"  ,23, 65, 6.3);
-new City(   "Tokyo"    ,3, 24, 1.2);
+new City(   "Tokyo"    ,03, 24, 1.2);
 new City(   "Dubai"    ,11, 38, 3.7);
 new City(   "Paris"    ,20, 38, 2.3);
-new City(   "Lima"     ,2, 16, 4.6);
+new City(   "Lima"     ,02, 16, 4.6);
 //define handler / callback function
 
 
@@ -164,7 +170,16 @@ new City(   "Lima"     ,2, 16, 4.6);
 function handleSubmit(event)
 {
     let cityString, minString, maxString, avgString;
-    body.innerHTML='';//resets the html id getter body is global
+
+    //body.innerHTML='';//resets the html id getter body is global
+    //CAUTION: this can make code vaulnerable.
+    body.remove(); //--removes all table element . wont add new table
+    let newBody = document.createElement('table');
+    newBody.id = 'shops';
+    document.querySelector('body').appendChild(newBody);
+
+    //body = document.getElementById('shops');
+    //safeway: dom.remove
     //prevent issues . browser from sending my info away
     event.preventDefault();
 
@@ -187,6 +202,7 @@ function handleSubmit(event)
 }
 // add event listeners
 //myForm is global getelementbyid
+
 myForm.addEventListener('submit', handleSubmit);
 
 
@@ -205,7 +221,7 @@ function main()
         city.setCookies();//sets the cookies array using the math for avg per hour
         city.render();//renders all to the html 
     }
-    totalsPerHour();//saves cookies totals per hour to array
+    totalsPerHour();
     createTFoot();
     return;
 }

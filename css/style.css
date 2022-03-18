@@ -1,7 +1,14 @@
+header>img
+{
+    width: 100%;
+}
+
+
 body
 {
     background-color: rgb(80, 79, 79);
 }
+
 table, tr, th, td
 {
 
