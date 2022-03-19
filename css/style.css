@@ -6,7 +6,19 @@ header>img
 
 body
 {
-    background-color: rgb(80, 79, 79);
+    flex: auto;
+    color: green;
+    font-family: Georgia;
+    text-align: center;
+    background-color: palegoldenrod;
+}
+
+#shops
+{
+    color: rgb(9, 12, 9);
+    background-color: brown;
+
+    font-family: Arial;
 }
 
 table, tr, th, td
@@ -24,5 +36,14 @@ td{
 
 ul
 {
+    color: aliceblue;
     font-family: sans-serif;
 }
+
+
+#title
+{
+    font-family: 'Zilla Slab Highlight';
+}
+
+
